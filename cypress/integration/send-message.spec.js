@@ -24,18 +24,21 @@ describe('Create message', function () {
     // Определяем список получателей
 
     it('select recipient list', () => {
+        cy.wait(1000)
         cy.contains('Выбрать аудиторию').click()
         cy.contains('Сохранить').click()
         cy.get('.field-layout__error').contains('Необходимо заполнить поле')
         cy.contains('Выберете список').click();
         cy.contains('Доступные').click()
+        cy.wait(1000)
         cy.contains('Сохранить').click()
     })
 
     // Заполняем данные для отправки письма
 
     it('settup Sender and subject', () => {
-        cy.contains('Отправитель и тема').click()
+        cy.wait(1000)
+        cy.contains('Отправитель').click()
         cy.contains('Сохранить').click()
         cy.get('.Select-target > .TextArea > .TextArea-input').parent().filter('.is-invalid')
         cy.get(':nth-child(2) > .field-layout ').find('.field-layout__error')
@@ -43,7 +46,8 @@ describe('Create message', function () {
 
         cy.get('.Select-target > .TextArea > .TextArea-input').type('Александр')
         cy.get('.SelectButton').click()
-        cy.contains(realID.login).click()
+        cy.get('.Menu > .Menu-content .MenuItem').contains(realID.login).click()
+
         cy.get('.field-layout__input > .TextArea > .TextArea-input').type('Test letter')
         cy.contains('Сохранить').click()
     })
@@ -51,14 +55,16 @@ describe('Create message', function () {
     // Текст письма
 
     it('settup the body', () => {
+        cy.wait(1000)
         cy.contains('Создать письмо').click()
-        cy.get('.GalleryCards-content > :nth-child(1) > .GalleryCard-preview > .GalleryCard-previewContent > .GalleryCard-shadow').click()
+        cy.get('.GalleryCards-content > :nth-child(1) > .GalleryCard-preview > .GalleryCard-previewContent').click()
         cy.contains('Сохранить и закрыть').click()
     })
 
     // Отправка письма
 
     it('send the letter', () => {
+        cy.wait(1000)
         cy.contains('Отправить').click()
         cy.get('.dialog__action-button > .Button > .Button-wrapper').click()
     })
